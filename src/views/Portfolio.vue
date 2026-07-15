@@ -726,10 +726,9 @@ export default {
 
 .about-ball {
     --about-ball-size: 56px;
-    --about-ball-rest-bottom: clamp(48px, calc(var(--about-bottom-pad) * 0.35), 120px);
     position: absolute;
     left: 50%;
-    bottom: var(--about-ball-rest-bottom);
+    bottom: 0;
     z-index: 5;
     width: var(--about-ball-size);
     height: var(--about-ball-size);
@@ -1134,65 +1133,65 @@ export default {
 }
 
 @keyframes about-ball-fall {
-    /* Glass-marble fall + 4 decaying bounces */
+    /* Glass-marble fall + 4 decaying bounces, drifting ~70px right */
     0% {
         opacity: 1;
-        transform: translate3d(-50%, -1100px, 0);
+        transform: translate3d(calc(-50% + 0px), -1100px, 0);
         animation-timing-function: cubic-bezier(0.55, 0.05, 0.8, 0.4);
     }
 
-    /* First impact */
+    /* First impact — still centered; sideways starts on the rebound */
     40% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(-50% + 0px), 0, 0);
         animation-timing-function: ease-out;
     }
 
-    /* Bounce 1 */
+    /* Bounce 1 (~29px right over this hop) */
     49% {
-        transform: translate3d(-50%, -78px, 0);
+        transform: translate3d(calc(-50% + 15px), -78px, 0);
         animation-timing-function: ease-in;
     }
 
     57% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(-50% + 29px), 0, 0);
         animation-timing-function: ease-out;
     }
 
-    /* Bounce 2 */
+    /* Bounce 2 (~20px) */
     64% {
-        transform: translate3d(-50%, -34px, 0);
+        transform: translate3d(calc(-50% + 39px), -34px, 0);
         animation-timing-function: ease-in;
     }
 
     71% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(-50% + 49px), 0, 0);
         animation-timing-function: ease-out;
     }
 
-    /* Bounce 3 */
+    /* Bounce 3 (~13px) */
     77% {
-        transform: translate3d(-50%, -15px, 0);
+        transform: translate3d(calc(-50% + 55px), -15px, 0);
         animation-timing-function: ease-in;
     }
 
     83% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(-50% + 62px), 0, 0);
         animation-timing-function: ease-out;
     }
 
-    /* Bounce 4 */
+    /* Bounce 4 (~8px) → 70px total */
     88% {
-        transform: translate3d(-50%, -6px, 0);
+        transform: translate3d(calc(-50% + 66px), -6px, 0);
         animation-timing-function: ease-in;
     }
 
     93% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(-50% + 70px), 0, 0);
     }
 
     100% {
         opacity: 1;
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(calc(-50% + 70px), 0, 0);
     }
 }
 </style>
