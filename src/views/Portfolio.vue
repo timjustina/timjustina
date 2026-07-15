@@ -103,7 +103,7 @@
             </section>
         </main>
 
-        <section id="about" class="about">
+        <section id="about" class="about" @mouseenter="startAboutBallDrop">
             <span class="about-line" aria-hidden="true" />
             <div class="about-inner">
                 <div class="about-photo-column">
@@ -142,11 +142,9 @@
                         English and Chinese. Speak a bit of Spanish. Love a good conversation. Can't help
                         learning new things all the time.
                         <br><br>
-                        <span ref="nerdsLine" class="about-nerds">
-                            For the nerds: a <a href="https://journals.biologists.com/dev/article/151/24/dev204256/363461/Short-range-Fgf-signalling-patterns-hindbrain" class="about-link">link</a> to my past life in
-                            developmental neurobiology
-                            (research paper).
-                        </span>
+                        For the nerds: a <a href="https://journals.biologists.com/dev/article/151/24/dev204256/363461/Short-range-Fgf-signalling-patterns-hindbrain" class="about-link">link</a> to my past life in
+                        developmental neurobiology
+                        (research paper).
                     </p>
                 </div>
                 <div class="about-actions">
@@ -160,9 +158,8 @@
                 </div>
             </div>
             <span
-                ref="aboutBall"
                 class="about-ball"
-                :class="{ 'about-ball--settled': aboutBallPhase === 'settled' }"
+                :class="{ 'about-ball--dropped': aboutBallDropped }"
                 aria-hidden="true"
             />
         </section>
@@ -192,7 +189,7 @@ export default {
             aboutPhoto,
             lineAnimation,
             lineAnimationTall,
-            aboutBallPhase: 'idle',
+            aboutBallDropped: false,
         }
     },
     mounted() {
@@ -221,81 +218,15 @@ export default {
         this.syncHeroDecorHeight()
         window.addEventListener('resize', this.onHeroDecorResize, { passive: true })
         document.fonts?.ready?.then(() => this.syncHeroDecorHeight())
-        this.observeNerdsLine()
     },
     beforeUnmount() {
         this.heroDecorObserver?.disconnect()
-        this.nerdsLineObserver?.disconnect()
         window.removeEventListener('resize', this.onHeroDecorResize)
     },
     methods: {
-        observeNerdsLine() {
-            const nerdsLine = this.$refs.nerdsLine
-            if (!nerdsLine || typeof IntersectionObserver === 'undefined') return
-
-            this.nerdsLineObserver = new IntersectionObserver(
-                ([entry]) => {
-                    if (!entry?.isIntersecting || this.aboutBallPhase !== 'idle') return
-                    this.nerdsLineObserver?.disconnect()
-                    this.startAboutBallDrop()
-                },
-                {
-                    threshold: 0.15,
-                    rootMargin: '0px 0px -12% 0px',
-                }
-            )
-            this.nerdsLineObserver.observe(nerdsLine)
-        },
         startAboutBallDrop() {
-            const ball = this.$refs.aboutBall
-            const about = this.$el?.querySelector('.about')
-            if (!ball || !about || this.aboutBallPhase !== 'idle') return
-
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                this.aboutBallPhase = 'settled'
-                return
-            }
-
-            this.aboutBallPhase = 'dropping'
-
-            const size = ball.offsetHeight || 56
-            const bottomPad =
-                parseFloat(getComputedStyle(about).getPropertyValue('--about-bottom-pad')) || 180
-            const restOffset = Math.min(120, Math.max(48, bottomPad * 0.35))
-            const endTop = Math.max(size, about.getBoundingClientRect().bottom - restOffset - size)
-            const startTop = -size
-
-            ball.style.position = 'fixed'
-            ball.style.left = '50%'
-            ball.style.top = `${startTop}px`
-            ball.style.bottom = 'auto'
-            ball.style.opacity = '1'
-            ball.style.transform = 'translateX(-50%)'
-
-            const animation = ball.animate(
-                [
-                    { top: `${startTop}px` },
-                    { top: `${endTop}px`, offset: 0.78 },
-                    { top: `${endTop - 18}px`, offset: 0.86 },
-                    { top: `${endTop + 6}px`, offset: 0.93 },
-                    { top: `${endTop}px` },
-                ],
-                {
-                    duration: 1650,
-                    easing: 'cubic-bezier(0.45, 0.05, 0.55, 0.95)',
-                    fill: 'forwards',
-                }
-            )
-
-            animation.onfinish = () => {
-                ball.style.removeProperty('position')
-                ball.style.removeProperty('left')
-                ball.style.removeProperty('top')
-                ball.style.removeProperty('bottom')
-                ball.style.removeProperty('opacity')
-                ball.style.removeProperty('transform')
-                this.aboutBallPhase = 'settled'
-            }
+            if (this.aboutBallDropped) return
+            this.aboutBallDropped = true
         },
         onHeroDecorResize() {
             requestAnimationFrame(() => this.syncHeroDecorHeight())
@@ -806,17 +737,11 @@ export default {
     background: var(--brand);
     pointer-events: none;
     opacity: 0;
-    transform: translateX(-50%);
+    transform: translate3d(-50%, -1100px, 0);
 }
 
-.about-ball--settled {
+.about-ball--dropped {
     opacity: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .about-ball--settled {
-        opacity: 1;
-    }
 }
 
 .about-actions {
@@ -1199,5 +1124,75 @@ export default {
         line-height: 27px;
     }
 
+}
+</style>
+
+<style>
+/* Unscoped so the keyframe name isn’t rewritten away from the animation. */
+.about-ball.about-ball--dropped {
+    animation: about-ball-fall 1.75s linear forwards;
+}
+
+@keyframes about-ball-fall {
+    /* Glass-marble fall + 4 decaying bounces */
+    0% {
+        opacity: 1;
+        transform: translate3d(-50%, -1100px, 0);
+        animation-timing-function: cubic-bezier(0.55, 0.05, 0.8, 0.4);
+    }
+
+    /* First impact */
+    40% {
+        transform: translate3d(-50%, 0, 0);
+        animation-timing-function: ease-out;
+    }
+
+    /* Bounce 1 */
+    49% {
+        transform: translate3d(-50%, -78px, 0);
+        animation-timing-function: ease-in;
+    }
+
+    57% {
+        transform: translate3d(-50%, 0, 0);
+        animation-timing-function: ease-out;
+    }
+
+    /* Bounce 2 */
+    64% {
+        transform: translate3d(-50%, -34px, 0);
+        animation-timing-function: ease-in;
+    }
+
+    71% {
+        transform: translate3d(-50%, 0, 0);
+        animation-timing-function: ease-out;
+    }
+
+    /* Bounce 3 */
+    77% {
+        transform: translate3d(-50%, -15px, 0);
+        animation-timing-function: ease-in;
+    }
+
+    83% {
+        transform: translate3d(-50%, 0, 0);
+        animation-timing-function: ease-out;
+    }
+
+    /* Bounce 4 */
+    88% {
+        transform: translate3d(-50%, -6px, 0);
+        animation-timing-function: ease-in;
+    }
+
+    93% {
+        transform: translate3d(-50%, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(-50%, 0, 0);
+    }
 }
 </style>
