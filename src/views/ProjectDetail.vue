@@ -34,7 +34,7 @@ export default {
   --top-bar-height: 120px;
   background: #fff;
   color: #3c3f41;
-  font-family: 'EB Garamond', 'Times New Roman', Times, serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 20px;
   min-height: 100vh;
 }
@@ -51,8 +51,8 @@ export default {
   margin-left: max(20px, calc(50% - var(--project-content-w) / 2 + var(--project-content-offset)));
   margin-right: auto;
   overflow: visible;
-  font-family: 'EB Garamond', 'Times New Roman', Times, serif;
-  font-weight: 400;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: calc(400 * var(--font-weight-scale));
   font-style: normal;
   font-size: 20px;
   line-height: 34px;
@@ -123,23 +123,23 @@ export default {
 
 .main :global(.project-body h2) {
   margin: 0;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-weight: 500;
+  font-family: 'Fira Code', monospace;
+  font-weight: calc(400 * var(--font-weight-scale));
   font-style: normal;
-  font-size: 22px;
-  line-height: 33px;
-  letter-spacing: -0.02em;
-  color: #3c3f41;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -2%;
+  color: #757575;
 }
 
 .main :global(.project-body h3) {
   margin: 48px 0 0;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-weight: 300;
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+  font-weight: calc(400 * var(--font-weight-scale));
   font-style: normal;
   font-size: 26px;
   line-height: 39px;
-  letter-spacing: -0.02em;
+  letter-spacing: -2%;
   color: #2c2c2c;
 }
 
@@ -262,8 +262,18 @@ export default {
   image-rendering: auto;
 }
 
+.main :global(.project-body strong) {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: calc(700 * var(--font-weight-scale));
+  font-style: normal;
+  font-size: 20px;
+  line-height: 34px;
+  letter-spacing: 0;
+}
+
 .main :global(.caption) {
   font-family: 'Fira Code', monospace;
+  font-weight: calc(400 * var(--font-weight-scale));
   font-size: 14px;
   color: #757575;
   margin-top: 12px;

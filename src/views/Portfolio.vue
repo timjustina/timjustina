@@ -272,7 +272,6 @@ export default {
     --about-location-color: #928a81;
     --about-location-icon-fill: #b9b4ae;
     --about-bg: #f4f2f1;
-    --font-weight-scale: 0.98;
     --page-max: 1454px;
     --page-pad: clamp(100px, calc(100px + (100vw - 997px) * 40 / 457), 140px);
     --project-w: min(798px, 100%);
@@ -309,10 +308,10 @@ export default {
 
 .hero-decor {
     --hero-line-lift: 100px;
-    --hero-line-bounce-1: 2.2*40px;
-    --hero-line-bounce-2: 2.2*17px;
-    --hero-line-bounce-3: 2.2*7px;
-    --hero-line-bounce-4: 2.2*3px;
+    --hero-line-bounce-1: 2.2*30px;
+    --hero-line-bounce-2: 2.2*12.75px;
+    --hero-line-bounce-3: 2.2*5.25px;
+    --hero-line-bounce-4: 2.2*2.25px;
     --hero-line-bounce-duration: 1.2s;
     --hero-line-return-duration: 0.35s;
     --hero-decor-height: 532px;
@@ -680,7 +679,7 @@ export default {
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: calc(400 * var(--font-weight-scale));
     line-height: 27px;
     color: var(--about-location-color);
     flex: none;
@@ -695,7 +694,7 @@ export default {
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 18px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: calc(400 * var(--font-weight-scale));
     line-height: 27px;
     letter-spacing: -0.36px;
     color: #928a81;

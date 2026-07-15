@@ -45,10 +45,10 @@ export default {
     margin: 0;
     max-width: 980px;
     font-family: 'Be Vietnam Pro', sans-serif;
-    font-weight: 300;
+    font-weight: calc(300 * var(--font-weight-scale));
     font-style: normal;
-    font-size: 35px;
-    line-height: 43.75px;
+    font-size: 32px;
+    line-height: 48px;
     letter-spacing: 0;
     text-align: center;
     color: #3c3f41;
@@ -61,11 +61,11 @@ export default {
     align-items: center;
     gap: 16px;
     font-family: 'Fira Code', monospace;
-    font-weight: 400;
+    font-weight: calc(400 * var(--font-weight-scale));
     font-style: normal;
     font-size: 20px;
     line-height: 30px;
-    letter-spacing: -0.02em;
+    letter-spacing: -2%;
     color: #757575;
 }
 
@@ -89,8 +89,8 @@ export default {
     }
 
     .project-header-title {
-        font-size: clamp(26px, calc(26px + (100vw - 320px) * 9 / 247), 35px);
-        line-height: 1.25;
+        font-size: clamp(26px, calc(26px + (100vw - 320px) * 6 / 247), 32px);
+        line-height: 1.5;
         letter-spacing: 0;
     }
 }

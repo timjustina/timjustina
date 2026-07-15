@@ -9,6 +9,10 @@ export default {
 </script>
 
 <style>
+:root {
+  --font-weight-scale: 0.98;
+}
+
 * {
   margin: 0;
   padding: 0;

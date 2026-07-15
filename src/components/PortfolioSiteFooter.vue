@@ -16,7 +16,6 @@ export default {
 .site-footer {
     --brand: #000aaa;
     --muted: #757575;
-    --font-weight-scale: 0.98;
 
     display: flex;
     flex-direction: row;
