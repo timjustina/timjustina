@@ -20,7 +20,7 @@
                     </div>
                     <p class="hero-intro">
                         <span class="hero-intro-lead">Tim Justina Yeung is a </span><strong class="hero-intro-em">Product Designer</strong> with a background in Neuroscience and research.
-                        Deeply enjoy understanding complex problems and providing creative solutions
+                        She deeply enjoys understanding complex problems and providing creative solutions
                         <strong class="hero-intro-em hero-intro-em--keep">for people :)</strong>
                     </p>
                 </div>
@@ -73,7 +73,7 @@
                             <span class="project-year">2024</span>
                         </div>
                         <p class="project-description">
-                            Redesigned workflows, human-machine interface, web + mobile app features of an IoT medication adherence platform
+                            End-to-end design and redesign of human-machine interface, web and mobile app features of an IoT medication adherence platform
                         </p>
                     </div>
                 </article>
@@ -284,8 +284,9 @@ export default {
     --about-bg: #f4f2f1;
     --page-max: 1454px;
     --page-pad: clamp(100px, calc(100px + (100vw - 997px) * 40 / 457), 140px);
-    --project-w: min(798px, 100%);
-    --project-stack-gap: clamp(120px, calc(120px + (100vw - 997px) * 20 / 457), 140px);
+    --project-w: min(776px, 100%);
+    --project-w-wide: min(876px, 100%);
+    --project-stack-gap: clamp(120px, calc(120px + (100vw - 997px) * 30 / 457), 150px);
     --top-bar-height: 120px;
 
     position: relative;
@@ -306,14 +307,15 @@ export default {
 .hero {
     position: relative;
     z-index: 1;
-    --hero-cta-gap: 90px;
+    --hero-cta-gap: 98px;
     margin-bottom: clamp(231px, calc(238px - (100vw - 997px) * 7 / 457), 238px);
 }
 
 .hero-intro-wrap {
     position: relative;
-    max-width: min(754px, calc(100% - 288px));
-    margin: clamp(98px, calc(98px + (100vw - 997px) * 24 / 457), 122px) 0 0 288px;
+    max-width: min(840px, calc(100% - 244px));
+    margin: clamp(98px, calc(98px + (100vw - 997px) * 15 / 457), 113px) 0 0
+        clamp(180px, calc(180px + (100vw - 997px) * 64 / 457), 244px);
 }
 
 .hero-decor {
@@ -324,13 +326,13 @@ export default {
     --hero-line-bounce-4: 2.2*2.25px;
     --hero-line-bounce-duration: 1.2s;
     --hero-line-return-duration: 0.35s;
-    --hero-decor-height: 532px;
+    --hero-decor-height: 487px;
     --hero-decor-bottom-offset: 50px;
-    --hero-decor-top-offset: 6px;
+    --hero-decor-top-offset: 7px;
     --hero-decor-line-natural-height: 818px;
     position: absolute;
-    top: 6px;
-    right: calc(100% + 42px);
+    top: 7px;
+    right: calc(100% + 23px);
     z-index: 0;
     width: 56px;
     height: var(--hero-decor-height);
@@ -425,7 +427,7 @@ export default {
 }
 
 .hero-intro-lead {
-    display: none;
+    display: inline;
 }
 
 .cta-button {
@@ -434,7 +436,7 @@ export default {
     justify-content: center;
     margin-top: var(--hero-cta-gap);
     margin-left: min(
-        clamp(565px, calc(565px + (100vw - 997px) * 192 / 457), 757px),
+        clamp(565px, calc(565px + (100vw - 997px) * 229 / 457), 794px),
         max(0px, calc(100% - 233px))
     );
     padding: 12px 24px;
@@ -492,7 +494,7 @@ export default {
 }
 
 .project:last-child {
-    width: var(--project-w);
+    width: var(--project-w-wide);
     max-width: 100%;
     margin-top: var(--project-stack-gap);
 }
@@ -512,7 +514,7 @@ export default {
 .project-image {
     position: relative;
     z-index: 1;
-    width: var(--project-w);
+    width: 100%;
     max-width: 100%;
     height: auto;
     display: block;
@@ -533,7 +535,7 @@ export default {
 
 .project-caption {
     position: relative;
-    margin-top: 28px;
+    margin-top: 30px;
 }
 
 .project-caption-header {
@@ -567,11 +569,11 @@ export default {
 }
 
 .project-description {
-    margin: 17px 0 0;
+    margin: 16px 0 0;
     font-family: 'Fira Code', monospace;
     font-size: 16px;
     font-weight: calc(400 * var(--font-weight-scale));
-    line-height: clamp(25px, calc(25px + (100vw - 997px) / 457), 26px);
+    line-height: 25px;
     color: var(--muted);
 }
 
@@ -579,10 +581,23 @@ export default {
     flex-shrink: 0;
     margin-left: auto;
     font-family: 'Fira Code', monospace;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: calc(500 * var(--font-weight-scale));
-    line-height: 30px;
+    line-height: 27px;
     color: var(--muted);
+}
+
+.project--offset .project-title,
+.project:last-child .project-title {
+    flex-basis: 510px;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.project--offset .project-year,
+.project:last-child .project-year {
+    font-size: 20px;
+    line-height: 30px;
 }
 
 .about {
@@ -590,7 +605,7 @@ export default {
     width: 100%;
     --about-gap: 340px;
     --about-image-text-gap: clamp(32px, calc(32px + (100vw - 997px) * 32 / 457), 64px);
-    --about-bottom-pad: clamp(180px, calc(180px + (100vw - 997px) * 180 / 457), 360px);
+    --about-bottom-pad: clamp(180px, calc(180px + (100vw - 997px) * 100 / 457), 280px);
     --about-top-pad: 80px;
     margin-top: var(--about-gap);
     padding: var(--about-top-pad) 0 var(--about-bottom-pad);
@@ -656,7 +671,7 @@ export default {
     align-items: center;
     gap: 4px;
     width: auto;
-    margin: 0 0 32px;
+    margin: 0 0 39px;
     padding: 0;
     box-sizing: border-box;
     flex: none;
@@ -684,8 +699,6 @@ export default {
 }
 
 .about-location-text {
-    width: 174px;
-    height: 27px;
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -700,23 +713,23 @@ export default {
 }
 
 .about-heading {
-    margin: 0 0 32px;
+    margin: 0 0 39px;
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: calc(400 * var(--font-weight-scale));
     line-height: 27px;
-    letter-spacing: -0.36px;
+    letter-spacing: -0.02em;
     color: #928a81;
 }
 
 .about-bio {
     margin: 0;
-    max-width: clamp(455px, calc(455px + (100vw - 997px) * 111 / 457), 566px);
+    max-width: clamp(455px, calc(455px + (100vw - 997px) * 37 / 457), 492px);
     font-family: 'Fira Code', monospace;
     font-size: 16px;
     font-weight: calc(400 * var(--font-weight-scale));
-    line-height: clamp(25px, calc(25px + (100vw - 997px) / 457), 26px);
+    line-height: 26px;
     color: var(--text);
 }
 
@@ -750,21 +763,22 @@ export default {
 /* ≥1454px: Final content artboard spacing */
 @media (min-width: 1454px) {
     .hero-intro-wrap {
-        max-width: min(754px, calc(100% - 288px));
-        margin: 122px 0 0 288px;
+        max-width: 840px;
+        margin: 113px 0 0 244px;
     }
 
     .hero-decor {
-        top: 9px;
+        top: 7px;
+        right: calc(100% + 23px);
     }
 
     .hero {
-        margin-bottom: 231px;
+        margin-bottom: 220px;
     }
 
     .cta-button {
         margin-top: var(--hero-cta-gap);
-        margin-left: min(757px, max(0px, calc(100% - 233px)));
+        margin-left: min(794px, max(0px, calc(100% - 233px)));
         width: 233px;
         min-width: 0;
         height: 57px;
@@ -774,18 +788,23 @@ export default {
         gap: 0;
     }
 
+    .portfolio-page {
+        --project-w: 776px;
+        --project-w-wide: 876px;
+    }
+
     .project--offset,
     .project:last-child {
-        margin-top: 140px;
+        margin-top: 150px;
     }
 
     .project-description {
-        margin-top: 17px;
+        margin-top: 16px;
     }
 
     .about {
         --about-gap: 340px;
-        --about-bottom-pad: 360px;
+        --about-bottom-pad: 280px;
         margin-top: 340px;
         padding: var(--about-top-pad) 0 var(--about-bottom-pad);
     }
@@ -815,7 +834,7 @@ export default {
     }
 
     .about-bio {
-        max-width: 566px;
+        max-width: 492px;
         margin-left: 0;
     }
 
@@ -1061,14 +1080,14 @@ export default {
 @media (max-width: 560px) {
     .portfolio-page {
         --page-pad: 20px;
-        --top-bar-height: 100px;
-        --hero-logo-gap: 22px;
-        /* Logo top 20px + 46px tall in the 100px bar */
-        --top-bar-logo-inset: 34px;
+        --top-bar-height: 86px;
+        --hero-logo-gap: 64px;
+        /* Logo top 20px + 46px tall in the 86px bar */
+        --top-bar-logo-inset: 20px;
     }
 
     .hero {
-        --hero-cta-gap: 60px;
+        --hero-cta-gap: 84px;
     }
 
     .portfolio-main {
@@ -1076,20 +1095,26 @@ export default {
     }
 
     .hero-intro-wrap {
-        max-width: 100%;
+        max-width: 320px;
+        margin: var(--hero-logo-gap) 0 0;
     }
 
     .hero-intro {
-        max-width: 100%;
+        max-width: 320px;
         font-size: 22px;
         line-height: 33px;
+    }
+
+    .hero-intro-lead {
+        display: inline;
     }
 
     .cta-button {
         width: 225px;
         height: 49px;
         min-height: 49px;
-        margin-left: 0;
+        min-width: 225px;
+        margin-left: 94px;
         padding: 8px 20px;
         font-size: 22px;
         line-height: 33px;
@@ -1099,26 +1124,61 @@ export default {
         gap: 80px;
     }
 
+    .project,
+    .project--featured,
+    .project--offset,
+    .project:last-child {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .project-image {
+        width: 100%;
+        max-width: 320px;
+    }
+
     .project-caption {
-        margin-top: 20px;
+        max-width: 320px;
+        margin-top: 28px;
     }
 
     .project-caption-header {
         padding-top: 0;
+        gap: 0;
     }
 
     .project-title {
+        flex: 0 1 276px;
+        max-width: 276px;
+        font-size: 18px;
+        line-height: 27px;
+        color: #4d4d4d;
+    }
+
+    .project--offset .project-title,
+    .project:last-child .project-title {
+        flex-basis: 276px;
         font-size: 18px;
         line-height: 27px;
     }
 
     .project-description {
-        margin-top: 16px;
+        margin-top: 11px;
+        max-width: 320px;
         font-size: 16px;
         line-height: 25px;
+        color: #757575;
     }
 
     .project-year {
+        margin-left: auto;
+        font-size: 18px;
+        line-height: 27px;
+        color: #757575;
+    }
+
+    .project--offset .project-year,
+    .project:last-child .project-year {
         font-size: 18px;
         line-height: 27px;
     }

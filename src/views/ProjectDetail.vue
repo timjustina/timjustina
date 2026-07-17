@@ -28,14 +28,14 @@ export default {
 .page {
   --page-max: 1454px;
   --page-pad: clamp(100px, calc(100px + (100vw - 997px) * 40 / 457), 140px);
-  --project-content-w: 635px;
+  --project-content-w: 668px;
   --project-content-offset: 22.5px;
   --project-media-gap: 118px;
   --top-bar-height: 120px;
   background: #fff;
   color: #3c3f41;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 20px;
+  font-size: 22px;
   min-height: 100vh;
 }
 
@@ -54,8 +54,8 @@ export default {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: calc(400 * var(--font-weight-scale));
   font-style: normal;
-  font-size: 20px;
-  line-height: 34px;
+  font-size: 22px;
+  line-height: calc(1.7 * 22px);
   letter-spacing: 0;
   color: #3c3f41;
 }
@@ -69,7 +69,7 @@ export default {
 }
 
 .main :global(.project-hero + .project-header) {
-  margin-top: 118px;
+  margin-top: 100px;
 }
 
 .main :global(.project-hero) {
@@ -134,8 +134,8 @@ export default {
 
 .main :global(.project-body h3) {
   margin: 48px 0 0;
-  font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
-  font-weight: calc(400 * var(--font-weight-scale));
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: calc(300 * var(--font-weight-scale));
   font-style: normal;
   font-size: 26px;
   line-height: 39px;
@@ -224,27 +224,73 @@ export default {
 @media (max-width: 767px) {
   .page {
     --project-content-offset: 0px;
-    --top-bar-height: 100px;
+    --top-bar-height: 86px;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Mobile order: title → meta → hero → body */
+  .main :global(.project-header) {
+    order: 1;
+    margin-top: calc(var(--top-bar-height) + 64px);
+    margin-bottom: 52px;
   }
 
   .main :global(.project-hero) {
-    margin-top: calc(var(--top-bar-height, 100px) + 48px);
+    order: 2;
+    margin-top: 0;
   }
 
   .main :global(.project-hero + .project-header) {
-    margin-top: 64px;
-  }
-
-  .main :global(.project-header) {
-    margin-top: calc(var(--top-bar-height, 100px) + 32px);
+    margin-top: calc(var(--top-bar-height) + 64px);
   }
 
   .main :global(.project-body) {
+    order: 3;
+    margin-top: 52px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;
-    width: 100%;
-    max-width: none;
+    width: min(320px, calc(100% - 40px));
+    max-width: 320px;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .main :global(.project-body h2) {
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+  }
+
+  .main :global(.project-body section h2 + *),
+  .main :global(.project-body .project-role h2 + p),
+  .main :global(.project-body h3 + p) {
+    margin-top: 32px;
+  }
+
+  .main :global(.project-body h3) {
+    margin-top: 48px;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+    font-weight: calc(400 * var(--font-weight-scale));
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+    color: #2c2c2c;
+  }
+
+  .main :global(.project-body strong) {
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .main :global(.project-body section + section) {
+    margin-top: 52px;
   }
 }
 
@@ -266,8 +312,8 @@ export default {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: calc(700 * var(--font-weight-scale));
   font-style: normal;
-  font-size: 20px;
-  line-height: 34px;
+  font-size: 22px;
+  line-height: calc(1.7 * 22px);
   letter-spacing: 0;
 }
 

@@ -4,8 +4,7 @@
             <div class="top-bar-inner">
                 <div ref="topBarContent" class="top-bar-content">
                     <router-link to="/" class="logo-block">
-                        <img class="logo" :src="logo" alt="" />
-                        <span ref="logoName" class="logo-name">TIM JUSTINA YEUNG</span>
+                        <img class="logo" :src="logo" alt="Tim Justina Yeung" />
                     </router-link>
                     <nav ref="nav" class="nav" :class="{ 'nav--compact': navCompact }">
                         <router-link
@@ -113,9 +112,9 @@ export default {
         },
         updateNavCompact() {
             const content = this.$refs.topBarContent
-            const name = this.$refs.logoName
+            const logoBlock = content?.querySelector('.logo-block')
             const nav = this.$refs.nav
-            if (!content || !name || !nav) return
+            if (!content || !logoBlock || !nav) return
 
             if (!this.navCompact) {
                 this.fullNavWidth = nav.offsetWidth
@@ -123,9 +122,9 @@ export default {
 
             const fullWidth = this.fullNavWidth ?? nav.offsetWidth
             const contentRect = content.getBoundingClientRect()
-            const nameRect = name.getBoundingClientRect()
+            const logoRect = logoBlock.getBoundingClientRect()
             const gapIfFull =
-                contentRect.width - fullWidth - (nameRect.right - contentRect.left)
+                contentRect.width - fullWidth - (logoRect.right - contentRect.left)
 
             this.navCompact = gapIfFull < 312
         },
@@ -175,7 +174,7 @@ export default {
 
 .top-bar-content {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 40px;
     width: 100%;
@@ -183,33 +182,22 @@ export default {
 
 .logo-block {
     display: flex;
-    align-items: flex-end;
-    gap: 20px;
+    align-items: center;
     text-decoration: none;
     color: inherit;
 }
 
 .logo {
-    width: 87px;
-    height: 46px;
+    width: 80px;
+    height: 42px;
     flex-shrink: 0;
-}
-
-.logo-name {
-    margin-bottom: 5px;
-    font-family: 'Be Vietnam Pro', sans-serif;
-    font-size: 18px;
-    font-weight: calc(500 * var(--font-weight-scale));
-    line-height: 27px;
-    color: var(--brand);
 }
 
 .nav {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 40px;
-    height: 45px;
-    margin-bottom: 5px;
+    height: 27px;
 }
 
 .nav-link {
@@ -278,7 +266,7 @@ export default {
 
 @media (max-width: 560px) {
     .portfolio-top-bar {
-        --top-bar-height: 100px;
+        --top-bar-height: 86px;
     }
 
     .top-bar-inner {
@@ -287,14 +275,18 @@ export default {
     }
 
     .top-bar-content {
-        align-items: flex-end;
+        align-items: center;
         gap: 0;
     }
 
     .logo-block {
         align-self: flex-start;
         margin-top: 20px;
-        width: 100%;
+    }
+
+    .logo {
+        width: 87px;
+        height: 46px;
     }
 
     .nav-link {

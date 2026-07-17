@@ -37,7 +37,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 41px;
+    gap: 48px;
     min-height: 115px;
 }
 
@@ -49,7 +49,7 @@ export default {
     font-style: normal;
     font-size: 32px;
     line-height: 48px;
-    letter-spacing: 0;
+    letter-spacing: -2%;
     text-align: center;
     color: #3c3f41;
 }
@@ -83,15 +83,28 @@ export default {
 
 @media (max-width: 767px) {
     .project-header {
-        gap: 24px;
+        width: min(318px, calc(100% - 40px));
+        gap: 20px;
         min-height: 0;
-        margin-bottom: 80px;
+        margin-bottom: 52px;
     }
 
     .project-header-title {
-        font-size: clamp(26px, calc(26px + (100vw - 320px) * 6 / 247), 32px);
-        line-height: 1.5;
-        letter-spacing: 0;
+        max-width: 318px;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: -2%;
+    }
+
+    .project-header-meta {
+        font-size: 14px;
+        line-height: 21px;
+        letter-spacing: -0.02em;
+        gap: 16px;
+    }
+
+    .project-header-meta-divider {
+        height: 21px;
     }
 }
 </style>
