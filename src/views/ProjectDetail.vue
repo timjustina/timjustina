@@ -221,79 +221,6 @@ export default {
   max-width: 100%;
 }
 
-@media (max-width: 767px) {
-  .page {
-    --project-content-offset: 0px;
-    --top-bar-height: 86px;
-  }
-
-  .main {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Mobile order: title → meta → hero → body */
-  .main :global(.project-header) {
-    order: 1;
-    margin-top: calc(var(--top-bar-height) + 64px);
-    margin-bottom: 52px;
-  }
-
-  .main :global(.project-hero) {
-    order: 2;
-    margin-top: 0;
-  }
-
-  .main :global(.project-hero + .project-header) {
-    margin-top: calc(var(--top-bar-height) + 64px);
-  }
-
-  .main :global(.project-body) {
-    order: 3;
-    margin-top: 52px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 20px;
-    width: min(320px, calc(100% - 40px));
-    max-width: 320px;
-    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .main :global(.project-body h2) {
-    font-size: 16px;
-    line-height: 30px;
-    letter-spacing: -0.02em;
-  }
-
-  .main :global(.project-body section h2 + *),
-  .main :global(.project-body .project-role h2 + p),
-  .main :global(.project-body h3 + p) {
-    margin-top: 32px;
-  }
-
-  .main :global(.project-body h3) {
-    margin-top: 48px;
-    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
-    font-weight: calc(400 * var(--font-weight-scale));
-    font-size: 22px;
-    line-height: 27px;
-    letter-spacing: -0.02em;
-    color: #2c2c2c;
-  }
-
-  .main :global(.project-body strong) {
-    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .main :global(.project-body section + section) {
-    margin-top: 52px;
-  }
-}
-
 .main :global(.full-image picture) {
   display: block;
   width: 100%;
@@ -333,6 +260,95 @@ export default {
 @media (max-width: 480px) {
   .page {
     --page-pad: 24px;
+  }
+}
+
+/* Phone layout — after desktop rules so type/spacing aren’t overridden */
+@media (max-width: 560px) {
+  .page {
+    --project-content-offset: 0px;
+    --top-bar-height: 86px;
+    --page-pad: 20px;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Order: title → meta → hero → body */
+  .main :global(.project-header) {
+    order: 1;
+    margin-top: calc(var(--top-bar-height) + 64px);
+    margin-bottom: 52px;
+  }
+
+  .main :global(.project-hero) {
+    order: 2;
+    margin-top: 0;
+  }
+
+  .main :global(.project-hero + .project-header) {
+    margin-top: calc(var(--top-bar-height) + 64px);
+  }
+
+  .main :global(.project-body) {
+    order: 3;
+    margin-top: 52px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+    width: min(320px, calc(100% - 40px));
+    max-width: 320px;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+    font-weight: calc(400 * var(--font-weight-scale));
+    font-size: 16px;
+    line-height: 24px;
+    color: #3c3f41;
+  }
+
+  .main :global(.project-body h2) {
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.02em;
+  }
+
+  .main :global(.project-body section h2 + *),
+  .main :global(.project-body .project-role h2 + p),
+  .main :global(.project-body h2 + h3),
+  .main :global(.project-body h3 + p) {
+    margin-top: 32px;
+  }
+
+  .main :global(.project-body h3) {
+    margin-top: 32px;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+    font-weight: calc(400 * var(--font-weight-scale));
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: -0.02em;
+    color: #2c2c2c;
+  }
+
+  .main :global(.project-body p) {
+    margin: 0 0 24px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .main :global(.project-body p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .main :global(.project-body strong) {
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+    font-weight: calc(700 * var(--font-weight-scale));
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .main :global(.project-body section + section) {
+    margin-top: 52px;
   }
 }
 </style>

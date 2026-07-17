@@ -1091,16 +1091,18 @@ export default {
     }
 
     .portfolio-main {
-        padding: var(--top-bar-height) 20px 0;
+        padding: var(--top-bar-height) var(--page-pad) 0;
+        box-sizing: border-box;
     }
 
     .hero-intro-wrap {
-        max-width: 320px;
+        max-width: 100%;
+        width: 100%;
         margin: var(--hero-logo-gap) 0 0;
     }
 
     .hero-intro {
-        max-width: 320px;
+        max-width: 100%;
         font-size: 22px;
         line-height: 33px;
     }
@@ -1114,7 +1116,7 @@ export default {
         height: 49px;
         min-height: 49px;
         min-width: 225px;
-        margin-left: 94px;
+        margin-left: min(94px, max(0px, calc(100% - 225px)));
         padding: 8px 20px;
         font-size: 22px;
         line-height: 33px;
@@ -1122,6 +1124,7 @@ export default {
 
     .work {
         gap: 80px;
+        width: 100%;
     }
 
     .project,
@@ -1129,27 +1132,30 @@ export default {
     .project--offset,
     .project:last-child {
         width: 100%;
-        max-width: 320px;
+        max-width: 100%;
     }
 
+    .project-image-link,
     .project-image {
         width: 100%;
-        max-width: 320px;
+        max-width: 100%;
     }
 
     .project-caption {
-        max-width: 320px;
+        width: 100%;
+        max-width: 100%;
         margin-top: 28px;
     }
 
     .project-caption-header {
         padding-top: 0;
         gap: 0;
+        width: 100%;
     }
 
     .project-title {
-        flex: 0 1 276px;
-        max-width: 276px;
+        flex: 1 1 auto;
+        max-width: none;
         font-size: 18px;
         line-height: 27px;
         color: #4d4d4d;
@@ -1157,14 +1163,14 @@ export default {
 
     .project--offset .project-title,
     .project:last-child .project-title {
-        flex-basis: 276px;
+        flex-basis: auto;
         font-size: 18px;
         line-height: 27px;
     }
 
     .project-description {
         margin-top: 11px;
-        max-width: 320px;
+        max-width: 100%;
         font-size: 16px;
         line-height: 25px;
         color: #757575;
@@ -1172,6 +1178,7 @@ export default {
 
     .project-year {
         margin-left: auto;
+        flex-shrink: 0;
         font-size: 18px;
         line-height: 27px;
         color: #757575;

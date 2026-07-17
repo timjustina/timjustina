@@ -81,7 +81,7 @@ export default {
     flex-shrink: 0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 560px) {
     .project-header {
         width: min(318px, calc(100% - 40px));
         gap: 20px;
@@ -91,20 +91,29 @@ export default {
 
     .project-header-title {
         max-width: 318px;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-weight: calc(300 * var(--font-weight-scale));
         font-size: 20px;
         line-height: 30px;
-        letter-spacing: -2%;
+        letter-spacing: -0.02em;
+        text-align: center;
+        color: #3c3f41;
     }
 
     .project-header-meta {
+        font-family: 'Fira Code', monospace;
+        font-weight: calc(400 * var(--font-weight-scale));
         font-size: 14px;
         line-height: 21px;
         letter-spacing: -0.02em;
         gap: 16px;
+        color: #757575;
     }
 
     .project-header-meta-divider {
+        width: 1px;
         height: 21px;
+        background: #757575;
     }
 }
 </style>
