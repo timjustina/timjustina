@@ -51,32 +51,36 @@ export default {
   margin-left: max(20px, calc(50% - var(--project-content-w) / 2 + var(--project-content-offset)));
   margin-right: auto;
   overflow: visible;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
   font-weight: calc(400 * var(--font-weight-scale));
   font-style: normal;
   font-size: 22px;
-  line-height: calc(1.7 * 22px);
+  line-height: 37px;
   letter-spacing: 0;
   color: #3c3f41;
 }
 
 .main :global(.project-header) {
-  margin-top: calc(var(--top-bar-height, 120px) + 48px);
+  margin-top: calc(var(--top-bar-height, 120px) + 160px);
 }
 
 .main :global(.project-body section) {
   overflow: visible;
 }
 
-.main :global(.project-hero + .project-header) {
-  margin-top: 100px;
-}
-
 .main :global(.project-hero) {
   width: 100vw;
   max-width: 100vw;
-  margin: calc(var(--top-bar-height, 120px) + 91px) calc(50% - 50vw) 0;
+  margin: 0 calc(50% - 50vw);
   text-align: center;
+}
+
+.main :global(.project-header + .project-hero) {
+  margin-top: 0;
+}
+
+.main :global(.project-hero + .project-body) {
+  margin-top: 100px;
 }
 
 .main :global(.project-hero picture) {
@@ -95,7 +99,7 @@ export default {
 }
 
 .main :global(.project-body section h2 + *) {
-  margin-top: 38px;
+  margin-top: 48px;
 }
 
 .main :global(.project-body .project-role p) {
@@ -103,7 +107,7 @@ export default {
 }
 
 .main :global(.project-body .project-role h2 + p) {
-  margin-top: 38px;
+  margin-top: 48px;
 }
 
 .main :global(.project-body .project-role ul) {
@@ -128,7 +132,7 @@ export default {
   font-style: normal;
   font-size: 20px;
   line-height: 30px;
-  letter-spacing: -2%;
+  letter-spacing: -0.02em;
   color: #757575;
 }
 
@@ -236,11 +240,11 @@ export default {
 }
 
 .main :global(.project-body strong) {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
   font-weight: calc(700 * var(--font-weight-scale));
   font-style: normal;
   font-size: 22px;
-  line-height: calc(1.7 * 22px);
+  line-height: 37px;
   letter-spacing: 0;
 }
 
@@ -271,30 +275,20 @@ export default {
     --page-pad: 20px;
   }
 
-  .main {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Order: title → meta → hero → body */
   .main :global(.project-header) {
-    order: 1;
     margin-top: calc(var(--top-bar-height) + 64px);
     margin-bottom: 52px;
   }
 
   .main :global(.project-hero) {
-    order: 2;
     margin-top: 0;
   }
 
-  .main :global(.project-hero + .project-header) {
-    margin-top: calc(var(--top-bar-height) + 64px);
+  .main :global(.project-hero + .project-body) {
+    margin-top: 52px;
   }
 
   .main :global(.project-body) {
-    order: 3;
-    margin-top: 52px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 20px;

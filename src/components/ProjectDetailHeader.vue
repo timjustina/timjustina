@@ -31,25 +31,25 @@ export default {
 
 <style scoped>
 .project-header {
-    width: min(980px, calc(100% - 40px));
-    margin: 0 auto 146px;
+    width: min(896px, calc(100% - 40px));
+    margin: 0 auto 100px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 48px;
-    min-height: 115px;
+    gap: 40px;
+    min-height: 0;
 }
 
 .project-header-title {
     margin: 0;
-    max-width: 980px;
+    max-width: 896px;
     font-family: 'Be Vietnam Pro', sans-serif;
     font-weight: calc(300 * var(--font-weight-scale));
     font-style: normal;
     font-size: 32px;
     line-height: 48px;
-    letter-spacing: -2%;
+    letter-spacing: 0;
     text-align: center;
     color: #3c3f41;
 }
@@ -63,9 +63,9 @@ export default {
     font-family: 'Fira Code', monospace;
     font-weight: calc(400 * var(--font-weight-scale));
     font-style: normal;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 30px;
-    letter-spacing: -2%;
+    letter-spacing: -0.02em;
     color: #757575;
 }
 
