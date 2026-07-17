@@ -30,7 +30,7 @@ export default {
   --page-pad: clamp(100px, calc(100px + (100vw - 997px) * 40 / 457), 140px);
   --project-content-w: 668px;
   --project-content-offset: 22.5px;
-  --project-media-gap: 118px;
+  --project-media-gap: 100px;
   --top-bar-height: 120px;
   background: #fff;
   color: #3c3f41;
@@ -273,6 +273,7 @@ export default {
     --project-content-offset: 0px;
     --top-bar-height: 86px;
     --page-pad: 20px;
+    --project-media-gap: 52px;
   }
 
   .main :global(.project-header) {
