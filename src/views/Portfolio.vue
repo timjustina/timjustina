@@ -15,7 +15,16 @@
                                 media="(max-width: 997px)"
                                 :srcset="lineAnimationTall"
                             />
-                            <img class="hero-decor-line" :src="lineAnimation" alt="" />
+                            <img
+                                class="hero-decor-line"
+                                :class="{
+                                    'hero-decor-line--bouncing': heroLinePhase === 'bouncing',
+                                    'hero-decor-line--up': heroLinePhase === 'up',
+                                }"
+                                :src="lineAnimation"
+                                alt=""
+                                @animationend="onHeroLineBounceEnd"
+                            />
                         </picture>
                     </div>
                     <p class="hero-intro">
@@ -28,7 +37,14 @@
             </section>
 
             <section id="work" class="work">
-                <article id="work-first" class="project project--featured">
+                <article
+                    id="work-first"
+                    class="project project--featured"
+                    @mouseenter="liftHeroLine"
+                    @mouseleave="dropHeroLine"
+                    @focusin="liftHeroLine"
+                    @focusout="onFeaturedFocusOut"
+                >
                     <router-link to="/work/DashboardDesign" class="project-image-link">
                         <img
                             class="project-image"
@@ -55,20 +71,21 @@
                     </div>
                 </article>
 
-                <article class="project project--offset">
-                    <router-link to="/project/MultiplatformSolution" class="project-image-link">
+                <article class="project project--offset project--upcoming">
+                    <div class="project-image-wrap">
                         <img
                             class="project-image"
                             :src="multiplatformHero"
                             alt="Home Medication Solution: IoT Multiplatform Design"
                         />
-                    </router-link>
+                        <div class="project-upcoming-overlay" aria-hidden="true">
+                            <span class="project-upcoming-label">Writing up ...</span>
+                        </div>
+                    </div>
                     <div class="project-caption">
                         <div class="project-caption-header">
                             <h2 class="project-title">
-                                <router-link to="/project/MultiplatformSolution" class="project-title-link">
-                                    Home Medication Solution: IoT Multiplatform Design
-                                </router-link>
+                                Home Medication Solution: IoT Multiplatform Design
                             </h2>
                             <span class="project-year">2024</span>
                         </div>
@@ -78,20 +95,21 @@
                     </div>
                 </article>
 
-                <article class="project">
-                    <router-link to="/project/art-curation" class="project-image-link">
+                <article class="project project--upcoming">
+                    <div class="project-image-wrap">
                         <img
                             class="project-image"
                             :src="marketplaceHero"
                             alt="Art Curation and Marketplace: Mobile App Design"
                         />
-                    </router-link>
+                        <div class="project-upcoming-overlay" aria-hidden="true">
+                            <span class="project-upcoming-label">Writing up ...</span>
+                        </div>
+                    </div>
                     <div class="project-caption">
                         <div class="project-caption-header">
                             <h2 class="project-title">
-                                <router-link to="/project/art-curation" class="project-title-link">
-                                    Art Curation and Marketplace: Mobile App Design
-                                </router-link>
+                                Art Curation and Marketplace: Mobile App Design
                             </h2>
                             <span class="project-year">2019</span>
                         </div>
@@ -190,6 +208,7 @@ export default {
             lineAnimation,
             lineAnimationTall,
             aboutBallDropped: false,
+            heroLinePhase: 'rest',
         }
     },
     mounted() {
@@ -222,8 +241,65 @@ export default {
     beforeUnmount() {
         this.heroDecorObserver?.disconnect()
         window.removeEventListener('resize', this.onHeroDecorResize)
+        this.getHeroLineEl()?.removeEventListener('transitionend', this.onHeroLineReturnEnd)
     },
     methods: {
+        getHeroLineEl() {
+            return this.$el?.querySelector('.hero-decor-line')
+        },
+        liftHeroLine() {
+            if (this.heroLinePhase === 'bouncing' || this.heroLinePhase === 'up') return
+            const line = this.getHeroLineEl()
+            if (line) {
+                line.removeEventListener('transitionend', this.onHeroLineReturnEnd)
+                line.style.removeProperty('transform')
+            }
+            this.heroLinePhase = 'bouncing'
+        },
+        onHeroLineBounceEnd(event) {
+            if (!String(event.animationName).includes('hero-line-bounce-up')) return
+            if (this.heroLinePhase !== 'bouncing') return
+            this.heroLinePhase = 'up'
+        },
+        dropHeroLine() {
+            if (this.heroLinePhase === 'rest') return
+            const line = this.getHeroLineEl()
+            if (!line) {
+                this.heroLinePhase = 'rest'
+                return
+            }
+
+            // Freeze the animated position, then ease down (removing animation alone would jump).
+            const computed = getComputedStyle(line).transform
+            const duration =
+                getComputedStyle(line).getPropertyValue('--hero-line-return-duration').trim() || '3s'
+            line.style.transition = 'none'
+            if (computed && computed !== 'none') {
+                line.style.transform = computed
+            }
+            this.heroLinePhase = 'rest'
+            void line.offsetWidth
+            line.style.transition = `transform ${duration} ease`
+            line.removeEventListener('transitionend', this.onHeroLineReturnEnd)
+            line.addEventListener('transitionend', this.onHeroLineReturnEnd)
+            requestAnimationFrame(() => {
+                line.style.transform = 'translateY(0)'
+            })
+        },
+        onHeroLineReturnEnd(event) {
+            if (event.propertyName !== 'transform') return
+            const line = event.currentTarget
+            if (this.heroLinePhase === 'rest') {
+                line.style.removeProperty('transform')
+                line.style.removeProperty('transition')
+            }
+            line.removeEventListener('transitionend', this.onHeroLineReturnEnd)
+        },
+        onFeaturedFocusOut(event) {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+                this.dropHeroLine()
+            }
+        },
         startAboutBallDrop() {
             if (this.aboutBallDropped) return
             this.aboutBallDropped = true
@@ -325,7 +401,7 @@ export default {
     --hero-line-bounce-3: 2.2*5.25px;
     --hero-line-bounce-4: 2.2*2.25px;
     --hero-line-bounce-duration: 1.2s;
-    --hero-line-return-duration: 0.35s;
+    --hero-line-return-duration: 0.4s;
     --hero-decor-height: 487px;
     --hero-decor-bottom-offset: 50px;
     --hero-decor-top-offset: 7px;
@@ -356,13 +432,18 @@ export default {
     min-height: var(--hero-decor-line-natural-height);
     object-fit: none;
     object-position: left bottom;
-    transition: transform var(--hero-line-return-duration) ease-out;
+    transform: translateY(0);
+    transition: transform var(--hero-line-return-duration) ease;
 }
 
-.portfolio-main:has(.project--featured:hover) .hero-decor-line,
-.portfolio-main:has(.project--featured:focus-within) .hero-decor-line {
+.hero-decor-line--bouncing {
     transition: none;
     animation: hero-line-bounce-up var(--hero-line-bounce-duration) forwards;
+}
+
+.hero-decor-line--up {
+    transform: translateY(calc(-1 * var(--hero-line-lift)));
+    transition: none;
 }
 
 @keyframes hero-line-bounce-up {
@@ -506,6 +587,12 @@ export default {
     text-decoration: none;
 }
 
+.project-image-wrap {
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
 .project-image-link picture {
     display: block;
     width: 100%;
@@ -523,14 +610,55 @@ export default {
     transition: border-radius 0.45s ease;
 }
 
-.project:hover .project-image,
-.project:focus-within .project-image {
+.project:not(.project--upcoming):hover .project-image,
+.project:not(.project--upcoming):focus-within .project-image {
     border-radius: 700px 700px 20px 20px;
 }
 
-.project:last-child:hover .project-image,
-.project:last-child:focus-within .project-image {
-    border-radius: 10000px 10000px 300px 300px;
+.project-upcoming-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.project--upcoming:hover .project-upcoming-overlay,
+.project--upcoming:focus-within .project-upcoming-overlay {
+    opacity: 1;
+}
+
+.project-upcoming-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 152px;
+    height: 27px;
+    background: rgba(255, 255, 255, 0.1);
+    font-family: 'Fira Code', monospace;
+    font-style: normal;
+    font-weight: calc(500 * var(--font-weight-scale));
+    font-size: 18px;
+    line-height: 27px;
+    color: #757575;
+}
+
+.project--upcoming {
+    cursor: default;
+}
+
+.project--upcoming .project-title {
+    color: var(--title);
 }
 
 .project-caption {
@@ -1123,6 +1251,7 @@ export default {
     }
 
     .project-image-link,
+    .project-image-wrap,
     .project-image {
         width: 100%;
         max-width: 100%;
