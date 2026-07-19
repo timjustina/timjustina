@@ -1,5 +1,22 @@
 <template>
     <div class="portfolio-page">
+        <div
+            v-if="showLoadingSplash"
+            class="loading-splash"
+            aria-busy="true"
+            aria-live="polite"
+            aria-label="Loading"
+        >
+            <img
+                class="loading-splash-frame"
+                :src="loadingFrames[loadingFrameIndex]"
+                alt=""
+                width="84"
+                height="84"
+            />
+        </div>
+
+        <div class="portfolio-content" :aria-hidden="showLoadingSplash ? 'true' : undefined">
         <PortfolioTopBar />
 
         <main class="portfolio-main">
@@ -187,6 +204,7 @@
         </section>
 
         <PortfolioSiteFooter />
+        </div>
     </div>
 </template>
 
@@ -198,8 +216,15 @@ import aboutPhoto from '../assets/portrait.jpg'
 import lineAnimation from '../assets/line_animation.svg'
 import lineAnimationTall from '../assets/line_animation_tall.svg'
 import aboutSquiggle from '../assets/squiggle_3.svg'
+import loading1 from '../assets/loading/loading 1.svg'
+import loading2 from '../assets/loading/loading 2.svg'
+import loading3 from '../assets/loading/loading 3.svg'
+import loading4 from '../assets/loading/loading 4.svg'
 import PortfolioTopBar from '../components/PortfolioTopBar.vue'
 import PortfolioSiteFooter from '../components/PortfolioSiteFooter.vue'
+
+const LOADING_FRAME_MS = 500
+const LOADING_MAX_ITERATIONS = 5
 
 export default {
     name: 'Portfolio',
@@ -213,11 +238,20 @@ export default {
             lineAnimation,
             lineAnimationTall,
             aboutSquiggle,
+            loadingFrames: [loading1, loading2, loading3, loading4],
+            showLoadingSplash: true,
+            loadingFrameIndex: 0,
+            loadingIteration: 1,
+            loadingTimer: null,
             aboutBallDropped: false,
             heroLinePhase: 'rest',
+            firstProjectPrefetchStarted: false,
+            firstProjectPrefetchIdleId: null,
         }
     },
     mounted() {
+        document.documentElement.classList.add('portfolio-booting')
+
         this.heroDecorObserver = new ResizeObserver(() => {
             requestAnimationFrame(() => this.syncHeroDecorHeight())
         })
@@ -255,14 +289,105 @@ export default {
             })
             this.aboutBallObserver.observe(aboutBio)
         }
+
+        this.scheduleFirstProjectPrefetch()
+        this.scheduleLoadingAdvance()
     },
     beforeUnmount() {
+        this.clearLoadingTimer()
+        document.documentElement.classList.remove('portfolio-booting')
         this.heroDecorObserver?.disconnect()
         this.aboutBallObserver?.disconnect()
         window.removeEventListener('resize', this.onHeroDecorResize)
         this.getHeroLineEl()?.removeEventListener('transitionend', this.onHeroLineReturnEnd)
+        if (this.firstProjectPrefetchIdleId != null && 'cancelIdleCallback' in window) {
+            cancelIdleCallback(this.firstProjectPrefetchIdleId)
+        }
     },
     methods: {
+        clearLoadingTimer() {
+            if (this.loadingTimer != null) {
+                clearTimeout(this.loadingTimer)
+                this.loadingTimer = null
+            }
+        },
+        areMainPageImagesLoaded() {
+            const imgs = [...this.$el.querySelectorAll('.portfolio-content img')]
+            if (!imgs.length) return false
+            return imgs.every((img) => img.complete)
+        },
+        finishLoadingSplash() {
+            this.clearLoadingTimer()
+            this.showLoadingSplash = false
+            document.documentElement.classList.remove('portfolio-booting')
+            requestAnimationFrame(() => {
+                this.syncHeroDecorHeight()
+                this.syncAboutBallPosition()
+            })
+        },
+        scheduleLoadingAdvance() {
+            this.clearLoadingTimer()
+            this.loadingTimer = setTimeout(() => {
+                // Always run the first two full cycles; then leave at the end of
+                // frame 1 once the main page images are ready.
+                if (
+                    this.loadingFrameIndex === 0 &&
+                    this.loadingIteration > 2 &&
+                    this.areMainPageImagesLoaded()
+                ) {
+                    this.finishLoadingSplash()
+                    return
+                }
+
+                let nextIndex = this.loadingFrameIndex + 1
+                let nextIteration = this.loadingIteration
+
+                if (nextIndex >= this.loadingFrames.length) {
+                    if (this.loadingIteration >= LOADING_MAX_ITERATIONS) {
+                        this.finishLoadingSplash()
+                        return
+                    }
+                    nextIteration = this.loadingIteration + 1
+                    nextIndex = 0
+                }
+
+                this.loadingFrameIndex = nextIndex
+                this.loadingIteration = nextIteration
+                this.scheduleLoadingAdvance()
+            }, LOADING_FRAME_MS)
+        },
+        waitForImage(img) {
+            if (!img || img.complete) return Promise.resolve()
+            return new Promise((resolve) => {
+                img.addEventListener('load', resolve, { once: true })
+                img.addEventListener('error', resolve, { once: true })
+            })
+        },
+        scheduleFirstProjectPrefetch() {
+            const upcomingImages = [
+                ...this.$el.querySelectorAll('.project--upcoming .project-image'),
+            ]
+            Promise.all(upcomingImages.map((img) => this.waitForImage(img))).then(() => {
+                this.prefetchFirstProject()
+            })
+        },
+        prefetchFirstProject() {
+            if (this.firstProjectPrefetchStarted) return
+            this.firstProjectPrefetchStarted = true
+
+            const run = () => {
+                this.firstProjectPrefetchIdleId = null
+                import('../prefetch/dashboardDesign.js')
+                    .then((mod) => mod.prefetchDashboardDesign())
+                    .catch(() => {})
+            }
+
+            if ('requestIdleCallback' in window) {
+                this.firstProjectPrefetchIdleId = requestIdleCallback(run, { timeout: 2000 })
+            } else {
+                setTimeout(run, 200)
+            }
+        },
         getHeroLineEl() {
             return this.$el?.querySelector('.hero-decor-line')
         },
@@ -333,7 +458,7 @@ export default {
             const bioRect = bio.getBoundingClientRect()
             const styles = getComputedStyle(about)
             const ballSize =
-                parseFloat(styles.getPropertyValue('--about-ball-size')) || 56
+                parseFloat(styles.getPropertyValue('--about-ball-size')) || 49
             const gap = 16
             const maxX = about.clientWidth - ballSize - 16
             const x = Math.max(
@@ -411,6 +536,27 @@ export default {
     min-height: 100vh;
     background: #fff;
     color: var(--text);
+}
+
+.loading-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.loading-splash-frame {
+    width: 84px;
+    height: 84px;
+    display: block;
+}
+
+:global(html.portfolio-booting),
+:global(html.portfolio-booting body) {
+    overflow: hidden;
 }
 
 .portfolio-main {
@@ -904,8 +1050,8 @@ export default {
 }
 
 .about-ball {
-    --about-ball-size: 59px;
-    --about-ball-height: 56px;
+    --about-ball-size: 49px;
+    --about-ball-height: 46px;
     position: absolute;
     left: var(--about-ball-x, 50%);
     bottom: 0;
