@@ -189,7 +189,12 @@
                         target="_blank"
                         rel="noopener noreferrer"
                     >Linkedin</a>
-                    <a href="#" class="about-action-btn">CV</a>
+                    <a
+                        :href="cvUrl"
+                        class="about-action-btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >CV</a>
                 </div>
             </div>
             <img
@@ -220,6 +225,7 @@ import loading1 from '../assets/loading/loading 1.svg'
 import loading2 from '../assets/loading/loading 2.svg'
 import loading3 from '../assets/loading/loading 3.svg'
 import loading4 from '../assets/loading/loading 4.svg'
+import cvUrl from '../assets/Tim Justina Yeung CV-2.pdf'
 import PortfolioTopBar from '../components/PortfolioTopBar.vue'
 import PortfolioSiteFooter from '../components/PortfolioSiteFooter.vue'
 
@@ -239,6 +245,7 @@ export default {
             lineAnimationTall,
             aboutSquiggle,
             loadingFrames: [loading1, loading2, loading3, loading4],
+            cvUrl,
             showLoadingSplash: true,
             loadingFrameIndex: 0,
             loadingIteration: 1,

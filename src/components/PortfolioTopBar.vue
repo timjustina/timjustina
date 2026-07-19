@@ -31,7 +31,12 @@
                             <span>Linkedin</span>
                             <img class="nav-indicator" :src="menuHover" alt="" aria-hidden="true" />
                         </a>
-                        <a href="#" class="nav-link nav-link--stacked nav-link--cv">
+                        <a
+                            :href="cvUrl"
+                            class="nav-link nav-link--stacked nav-link--cv"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             <span>CV</span>
                             <img class="nav-indicator" :src="menuHover" alt="" aria-hidden="true" />
                         </a>
@@ -45,6 +50,7 @@
 <script>
 import logo from '../assets/TjyCutoutLogo.svg'
 import menuHover from '../assets/menu_hover.svg'
+import cvUrl from '../assets/Tim Justina Yeung CV-2.pdf'
 import { scrollToAbout } from '../utils/scrollToAbout.js'
 
 export default {
@@ -53,6 +59,7 @@ export default {
         return {
             logo,
             menuHover,
+            cvUrl,
             navCompact: false,
             fullNavWidth: null,
             navGapObserver: null,
