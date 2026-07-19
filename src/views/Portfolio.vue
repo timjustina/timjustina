@@ -9,7 +9,9 @@
         >
             <img
                 class="loading-splash-frame"
+                :class="{ 'loading-splash-frame--rotating': loadingRotating }"
                 :src="loadingFrames[loadingFrameIndex]"
+                :style="{ transform: `rotate(${loadingRotationDeg}deg)` }"
                 alt=""
                 width="84"
                 height="84"
@@ -230,7 +232,9 @@ import PortfolioTopBar from '../components/PortfolioTopBar.vue'
 import PortfolioSiteFooter from '../components/PortfolioSiteFooter.vue'
 
 const LOADING_FRAME_MS = 500
-const LOADING_MAX_ITERATIONS = 5
+const LOADING_PAUSE_MS = 250
+const LOADING_MAX_ITERATIONS = 4
+const LOADING_MIN_ITERATIONS = 4
 
 export default {
     name: 'Portfolio',
@@ -250,6 +254,8 @@ export default {
             loadingFrameIndex: 0,
             loadingIteration: 1,
             loadingTimer: null,
+            loadingRotationDeg: 0,
+            loadingRotating: false,
             aboutBallDropped: false,
             heroLinePhase: 'rest',
             firstProjectPrefetchStarted: false,
@@ -335,32 +341,55 @@ export default {
         scheduleLoadingAdvance() {
             this.clearLoadingTimer()
             this.loadingTimer = setTimeout(() => {
-                // Always run the first two full cycles; then leave at the end of
+                // Always run the configured minimum cycles; then leave at the end of
                 // frame 1 once the main page images are ready.
                 if (
                     this.loadingFrameIndex === 0 &&
-                    this.loadingIteration > 2 &&
+                    this.loadingIteration > LOADING_MIN_ITERATIONS &&
                     this.areMainPageImagesLoaded()
                 ) {
                     this.finishLoadingSplash()
                     return
                 }
 
-                let nextIndex = this.loadingFrameIndex + 1
-                let nextIteration = this.loadingIteration
-
-                if (nextIndex >= this.loadingFrames.length) {
-                    if (this.loadingIteration >= LOADING_MAX_ITERATIONS) {
-                        this.finishLoadingSplash()
-                        return
-                    }
-                    nextIteration = this.loadingIteration + 1
-                    nextIndex = 0
+                // After frame 4 holds, rotate it 90° CCW, then continue
+                if (this.loadingFrameIndex === 3) {
+                    this.rotateAfterFrame4()
+                    return
                 }
 
-                this.loadingFrameIndex = nextIndex
-                this.loadingIteration = nextIteration
+                // Sequence is frame 1 → frame 4 (skip 2 and 3)
+                this.loadingFrameIndex = 3
                 this.scheduleLoadingAdvance()
+            }, LOADING_FRAME_MS)
+        },
+        rotateAfterFrame4() {
+            this.clearLoadingTimer()
+            this.loadingRotating = true
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.loadingRotationDeg -= 90
+                })
+            })
+
+            // Rotate 500ms, pause 100ms, then frame 1 upright again
+            this.loadingTimer = setTimeout(() => {
+                this.loadingRotating = false
+
+                if (this.loadingIteration >= LOADING_MAX_ITERATIONS) {
+                    this.finishLoadingSplash()
+                    return
+                }
+
+                this.loadingTimer = setTimeout(() => {
+                    // Snap back upright (no transition) before the next cycle
+                    this.$nextTick(() => {
+                        this.loadingRotationDeg = 0
+                        this.loadingIteration += 1
+                        this.loadingFrameIndex = 0
+                        this.scheduleLoadingAdvance()
+                    })
+                }, LOADING_PAUSE_MS)
             }, LOADING_FRAME_MS)
         },
         waitForImage(img) {
@@ -559,6 +588,11 @@ export default {
     width: 84px;
     height: 84px;
     display: block;
+    transform-origin: center center;
+}
+
+.loading-splash-frame--rotating {
+    transition: transform 500ms linear;
 }
 
 :global(html.portfolio-booting),
