@@ -275,17 +275,19 @@
                     snippets so they don't overshadow the main app features where users can find more detailed
                     information.</p>
 
-                <div class="full-image">
-                    <video
-                        class="project-video"
-                        :src="vid7"
-                        autoplay
-                        loop
-                        muted
-                        playsinline
-                    />
-                    <p class="caption">Caregiver-facing dashboard demo</p>
-                </div>
+                <figure class="full-image full-image--captioned">
+                    <div class="full-image-media">
+                        <video
+                            class="project-video"
+                            :src="vid7"
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                        />
+                    </div>
+                    <figcaption class="caption">Caregiver-facing dashboard demo</figcaption>
+                </figure>
             </section>
 
             <section>
@@ -333,14 +335,14 @@
 
                 <ul>
                     <li>
-                        <strong>Usability testing for enterprise customisation</strong>
+                        <em>Usability testing for enterprise customisation</em>
                         <p>The feedback session validated the core design, but <strong>structured usability testing</strong>
                             is crucial for the next phase. The reality check would allow us to evaluate <strong>how well the
                             dashboard fits with the workflows</strong> of the caregiving enterprise, and thus helps determine
                             the requirements of <strong>subsequent iterations</strong> depending on the customers' needs.</p>
                     </li>
                     <li>
-                        <strong>Extending the design system</strong>
+                        <em>Extending the design system</em>
                         <p>A <strong>preliminary colour system</strong> was established at this stage, but a <strong>more
                             comprehensive design system</strong> will be essential, especially regarding <strong>data
                             visualisation</strong>. This should include guidelines for <strong>chart types, data density,
@@ -348,7 +350,7 @@
                             <strong>consistent look, feel, and usability standard</strong>.</p>
                     </li>
                     <li>
-                        <strong>Usage‑based prioritisation</strong>
+                        <em>Usage‑based prioritisation</em>
                         <p>For further UX improvement, future iterations could implement an <strong>adaptive UI</strong> that
                             automatically reconfigures based on <strong>tracked engagement data</strong>.
                             <strong>High‑engagement widgets</strong> could be surfaced more prominently, while

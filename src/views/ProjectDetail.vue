@@ -263,9 +263,12 @@ export default {
   margin-bottom: 0;
 }
 
-.main :global(.project-body li > strong:first-child:has(+ p)) {
-  display: inline;
+.main :global(.project-body li > strong:first-child:has(+ p)),
+.main :global(.project-body li > em:first-child:has(+ p)) {
+  display: block;
   font-style: italic;
+  font-weight: calc(400 * var(--font-weight-scale));
+  margin-bottom: 12px;
 }
 
 .main :global(.full-image) {
@@ -275,12 +278,43 @@ export default {
   max-width: 1100px;
   width: min(1100px, calc(100vw - 40px));
   margin: var(--project-media-gap) 0;
+  padding: 0;
+  border: 0;
   text-align: center;
 }
 
-.main :global(.full-image:has(> video)) {
+.main :global(.full-image--captioned) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  overflow: visible;
+  line-height: normal;
+}
+
+.main :global(.full-image--captioned .caption) {
+  margin: 0;
+  text-align: left;
+}
+
+.main :global(.full-image-media) {
+  display: block;
+  width: 100%;
   line-height: 0;
   overflow: hidden;
+  border: 0;
+}
+
+.main :global(.full-image-media > .project-video),
+.main :global(.full-image-media > video) {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border: 0;
+  outline: none;
+  /* No scale — it was eating into the caption gap */
+  transform: none;
 }
 
 .main :global(.hero-image) {
@@ -352,7 +386,7 @@ export default {
   font-weight: calc(400 * var(--font-weight-scale));
   font-size: 14px;
   color: #757575;
-  margin-top: 22px;
+  margin-top: 42px;
   text-align: left;
 }
 
