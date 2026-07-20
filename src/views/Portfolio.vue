@@ -56,6 +56,7 @@
             </section>
 
             <section id="work" class="work">
+                <h2 class="work-heading">Work</h2>
                 <article
                     id="work-first"
                     class="project project--featured"
@@ -790,6 +791,10 @@ export default {
     gap: 0;
 }
 
+.work-heading {
+    display: none;
+}
+
 .project {
     position: relative;
     z-index: 1;
@@ -1324,8 +1329,21 @@ export default {
     }
 
     .work {
-        gap: 80px;
+        gap: 0;
         width: 100%;
+    }
+
+    .work-heading {
+        display: block;
+        margin: 0 0 20px;
+        font-family: 'Fira Code', monospace;
+        font-weight: calc(400 * var(--font-weight-scale));
+        font-style: normal;
+        font-size: 16px;
+        line-height: 25px;
+        letter-spacing: 0;
+        color: #757575;
+        text-align: left;
     }
 
     .project,
@@ -1336,6 +1354,10 @@ export default {
         max-width: 100%;
         margin-top: 0;
         margin-left: 0;
+    }
+
+    .project + .project {
+        margin-top: 80px;
     }
 
     .project-image-link,
