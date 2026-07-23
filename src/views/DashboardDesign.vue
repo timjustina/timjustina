@@ -125,14 +125,14 @@
                 </div>
 
                 <h3>2. Design for accessibility</h3>
-                <p>I updated the colour system of the product by <strong>adding new accent colours</strong> to
-                    accommodate the dashboard design. Consistent with the rest of the product, I optimised the design
-                    according to <strong>WCAG criteria of accessibility</strong>. To improve distinguishability,
-                    colour contrast for text and graphics was <strong>audited using WebAIM</strong> and adjusted to
-                    meet <strong>WCAG 2.1 AA</strong>. When colour contrast was deemed insufficient, I used
-                    <strong>borders</strong> to improve accessibility of graphics. <strong>Interactive dynamic
-                    features</strong> were incorporated in charts to enable <strong>isolating datasets</strong> for
-                    clarity.</p>
+                <p>Working within the constraints of the existing design system, I updated the colour system of the
+                    product by <strong>adding new accent colours</strong> to accommodate the dashboard design.
+                    Consistent with the rest of the product, I optimised the design according to <strong>WCAG criteria
+                    of accessibility</strong>. To improve distinguishability, colour contrast for text and graphics
+                    was <strong>audited using WebAIM</strong> and adjusted to meet <strong>WCAG 2.1 AA</strong>. When
+                    colour contrast was deemed insufficient, I used <strong>borders</strong> to improve accessibility
+                    of graphics. <strong>Interactive dynamic features</strong> were incorporated in charts to enable
+                    <strong>isolating datasets</strong> for clarity.</p>
 
                 <p>For understandability, <strong>every chart includes data labels</strong>. This ensures
                     comprehension is not reliant on plotting style alone – supporting both novice users and those
@@ -312,23 +312,23 @@
                     possible by the attention not only to visual aspects, but to the <strong>user lifecycle, data
                     requirements and hardware constraints</strong>.</p>
 
-                <p>Overall, the project succeeded in achieving its <strong>0‑to‑1 objectives</strong> and laid the
-                    groundwork for <strong>subsequent design and development initiatives</strong>.</p>
+                <p>Overall, the project succeeded in achieving its <strong>0‑to‑1 objectives</strong>, considering
+                    both <strong>business and user needs</strong>, and laid the groundwork for <strong>subsequent
+                    design and development initiatives</strong>.</p>
             </section>
 
             <section>
                 <h2>Reflection</h2>
-                <p>This <strong>0‑to‑1 initiative</strong> delivered <strong>polished, high‑fidelity
-                    prototypes</strong> that <strong>piqued investor interest</strong> and demonstrated product
-                    viability. Looking back, there are a few things <strong>I would approach differently</strong>.
-                    Although it was essential to produce some visually polished prototypes as quickly as possible for
-                    demo purposes in pitches, I would have taken more time to <strong>better define the interaction
-                    logic</strong> of the modules at the <strong>low‑fidelity stage</strong>. This would have allowed
-                    for <strong>faster iteration</strong> on interaction without being <strong>bogged down by
-                    pixels</strong>. While a <strong>comprehensive design documentation suite</strong> would not be
-                    feasible at this 0‑to‑1 stage, <strong>lean documentation</strong> capturing key design decisions,
-                    such as <strong>data considerations, accessibility, UI states, and interaction specs</strong>,
-                    would provide a <strong>clearer foundation</strong> for the next phase of development.</p>
+                <p>This 0‑to‑1 initiative delivered polished, high‑fidelity prototypes that piqued investor interest
+                    and demonstrated product viability. Looking back, there are a few things I would
+                    <strong>approach differently</strong>. Although it was essential to produce some visually polished
+                    prototypes as quickly as possible for demo purposes in pitches, I would have taken more time to
+                    <strong>better define the interaction logic</strong> of the modules at the
+                    <strong>low‑fidelity stage</strong>. This would have allowed for <strong>faster iteration</strong>
+                    on interaction without being bogged down by pixels. While a comprehensive design documentation
+                    suite would not be feasible at this 0‑to‑1 stage, <strong>lean documentation</strong> capturing
+                    key design decisions, such as data considerations, accessibility, UI states, and interaction
+                    specs, would provide a clearer <strong>foundation for the next phase</strong> of development.</p>
 
                 <p>There are also several crucial aspects to consider for further development ahead regarding
                     <strong>scalability, adaptability, and data‑driven iteration</strong>:</p>
@@ -337,25 +337,25 @@
                     <li>
                         <em>Usability testing for enterprise customisation</em>
                         <p>The feedback session validated the core design, but <strong>structured usability testing</strong>
-                            is crucial for the next phase. The reality check would allow us to evaluate <strong>how well the
-                            dashboard fits with the workflows</strong> of the caregiving enterprise, and thus helps determine
-                            the requirements of <strong>subsequent iterations</strong> depending on the customers' needs.</p>
+                            is crucial for the next phase. The reality check would allow us to evaluate how well the
+                            dashboard fits with the workflows of the caregiving enterprise, and thus helps determine
+                            the requirements of subsequent iterations depending on the customers' needs.</p>
                     </li>
                     <li>
                         <em>Extending the design system</em>
-                        <p>A <strong>preliminary colour system</strong> was established at this stage, but a <strong>more
-                            comprehensive design system</strong> will be essential, especially regarding <strong>data
-                            visualisation</strong>. This should include guidelines for <strong>chart types, data density,
-                            accessibility and interactions</strong>. This ensures that any new charts maintain a
-                            <strong>consistent look, feel, and usability standard</strong>.</p>
+                        <p>A preliminary colour system was established at this stage, but a more comprehensive design
+                            system will be essential, especially regarding data visualisation. This should include
+                            guidelines for <strong>chart types, data density,</strong> accessibility and interactions.
+                            This ensures that any new charts maintain a <strong>consistent look, feel, and usability
+                            standard</strong>.</p>
                     </li>
                     <li>
                         <em>Usage‑based prioritisation</em>
-                        <p>For further UX improvement, future iterations could implement an <strong>adaptive UI</strong> that
-                            automatically reconfigures based on <strong>tracked engagement data</strong>.
-                            <strong>High‑engagement widgets</strong> could be surfaced more prominently, while
-                            <strong>lower‑engagement ones</strong> could be deprioritised, allowing the dashboard to
-                            <strong>adapt dynamically</strong> to real‑world usage patterns.</p>
+                        <p>For further UX improvement, future iterations could implement an <strong>adaptive UI</strong>
+                            that automatically reconfigures based on <strong>tracked engagement data</strong>.
+                            High‑engagement widgets could be surfaced more prominently, while lower‑engagement ones
+                            could be deprioritised, allowing the dashboard to adapt dynamically to real‑world usage
+                            patterns.</p>
                     </li>
                 </ul>
             </section>

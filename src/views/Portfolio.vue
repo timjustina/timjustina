@@ -56,7 +56,6 @@
             </section>
 
             <section id="work" class="work">
-                <h2 class="work-heading">Work</h2>
                 <article
                     id="work-first"
                     class="project project--featured"
@@ -141,7 +140,7 @@
             </section>
         </main>
 
-        <section id="about" class="about" @mouseenter="startAboutBallDrop">
+        <section id="about" class="about">
             <span class="about-line" aria-hidden="true" />
             <div class="about-inner">
                 <div class="about-photo-column">
@@ -288,6 +287,7 @@ export default {
         this.syncHeroDecorHeight()
         this.syncAboutBallPosition()
         window.addEventListener('resize', this.onHeroDecorResize, { passive: true })
+        window.addEventListener('scroll', this.onAboutBallScroll, { passive: true })
         document.fonts?.ready?.then(() => {
             this.syncHeroDecorHeight()
             this.syncAboutBallPosition()
@@ -310,6 +310,7 @@ export default {
         this.heroDecorObserver?.disconnect()
         this.aboutBallObserver?.disconnect()
         window.removeEventListener('resize', this.onHeroDecorResize)
+        window.removeEventListener('scroll', this.onAboutBallScroll)
         this.getHeroLineEl()?.removeEventListener('transitionend', this.onHeroLineReturnEnd)
         if (this.firstProjectPrefetchIdleId != null && 'cancelIdleCallback' in window) {
             cancelIdleCallback(this.firstProjectPrefetchIdleId)
@@ -479,10 +480,21 @@ export default {
                 this.dropHeroLine()
             }
         },
+        onAboutBallScroll() {
+            if (this.aboutBallDropped) return
+            const doc = document.documentElement
+            const remaining =
+                doc.scrollHeight - (window.scrollY + window.innerHeight)
+            if (remaining <= 48) {
+                this.startAboutBallDrop()
+            }
+        },
         startAboutBallDrop() {
             if (this.aboutBallDropped) return
+            if (window.matchMedia('(max-width: 600px)').matches) return
             this.syncAboutBallPosition()
             this.aboutBallDropped = true
+            window.removeEventListener('scroll', this.onAboutBallScroll)
         },
         syncAboutBallPosition() {
             const about = this.$el?.querySelector('.about')
@@ -789,10 +801,6 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
-}
-
-.work-heading {
-    display: none;
 }
 
 .project {
@@ -1284,10 +1292,13 @@ export default {
         --hero-logo-gap: 64px;
         /* Logo top 20px + 46px tall in the 86px bar */
         --top-bar-logo-inset: 20px;
+        /* Same gap: CTA → first image, and last project text → about */
+        --mobile-block-gap: calc(2 * 84px - 25px - 20px - 15px);
     }
 
     .hero {
         --hero-cta-gap: 84px;
+        margin-bottom: var(--mobile-block-gap);
         min-height: 0;
     }
 
@@ -1331,19 +1342,6 @@ export default {
     .work {
         gap: 0;
         width: 100%;
-    }
-
-    .work-heading {
-        display: block;
-        margin: 0 0 20px;
-        font-family: 'Fira Code', monospace;
-        font-weight: calc(400 * var(--font-weight-scale));
-        font-style: normal;
-        font-size: 16px;
-        line-height: 25px;
-        letter-spacing: 0;
-        color: #757575;
-        text-align: left;
     }
 
     .project,
@@ -1411,7 +1409,7 @@ export default {
     }
 
     .about {
-        margin-top: 80px;
+        margin-top: var(--mobile-block-gap);
         --about-bottom-pad: 276px;
         padding: var(--about-top-pad) 0 var(--about-bottom-pad);
     }
@@ -1482,6 +1480,10 @@ export default {
         gap: 31px;
         margin-top: 96px;
         padding-left: 0;
+    }
+
+    .about-ball {
+        display: none;
     }
 
     .about-action-btn {
